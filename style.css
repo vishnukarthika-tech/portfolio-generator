@@ -1,0 +1,277 @@
+/* ==========================================================================
+   PORTFOLIO FORGE — BUILDER UI STYLESHEET
+   Aesthetic: drafting table / technical blueprint. The tool that drafts
+   portfolios looks like a drafting board itself — graph-paper texture,
+   pinned index cards, dimension-line dividers, technical-pen accent.
+   ========================================================================== */
+
+:root {
+  --paper: #F4EFE4;          /* drafting paper */
+  --paper-line: rgba(14, 27, 34, 0.08);
+  --ink: #0E1B22;             /* deep technical ink */
+  --ink-soft: #56636B;
+  --card: #FBF8F1;
+  --card-border: rgba(14, 27, 34, 0.14);
+  --pen: #2F6FED;             /* technical-pen blue */
+  --pen-soft: rgba(47, 111, 237, 0.12);
+  --pin: #E0552B;             /* pin / highlight */
+  --font-label: 'JetBrains Mono', monospace;
+  --font-display: 'Fraunces', serif;
+  --font-ui: 'Inter', sans-serif;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px),
+    var(--paper);
+  background-size: 28px 28px, 28px 28px, auto;
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+
+/* ---------- TOP BAR ---------- */
+.forge-topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: 3px solid var(--pen);
+}
+.forge-brand { display: flex; align-items: center; gap: 0.7rem; }
+.forge-mark {
+  font-family: var(--font-label);
+  font-weight: 700;
+  background: var(--pen);
+  color: var(--ink);
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+}
+.forge-brand strong { display: block; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.1; }
+.forge-tagline { font-family: var(--font-label); font-size: 0.68rem; color: rgba(244,239,228,0.55); letter-spacing: 0.04em; }
+.forge-actions { display: flex; gap: 0.6rem; }
+
+.btn-ghost-line {
+  background: transparent;
+  border: 1px solid rgba(244,239,228,0.3);
+  color: var(--paper);
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  border-radius: 7px;
+  padding: 0.5rem 0.85rem;
+  transition: all 0.2s ease;
+}
+.btn-ghost-line:hover { background: rgba(244,239,228,0.1); color: var(--paper); border-color: var(--paper); }
+
+.btn-forge-primary {
+  background: var(--pen);
+  color: #fff;
+  border: none;
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 7px;
+  padding: 0.55rem 1.1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-forge-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -8px rgba(47,111,237,0.6); color: #fff; }
+
+/* ---------- LAYOUT ---------- */
+.forge-body {
+  display: grid;
+  grid-template-columns: minmax(360px, 480px) 1fr;
+  min-height: calc(100vh - 64px);
+}
+@media (max-width: 991.98px) {
+  .forge-body { grid-template-columns: 1fr; }
+}
+
+/* ---------- LEFT DECK (FORM) ---------- */
+.forge-deck {
+  padding: 2rem 1.75rem 4rem;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  border-right: 1px dashed var(--card-border);
+}
+@media (max-width: 991.98px) { .forge-deck { max-height: none; border-right: none; } }
+
+.deck-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.4rem 1.5rem;
+  margin: 0 0 1.5rem;
+  position: relative;
+  box-shadow: 0 1px 0 var(--card-border), 0 10px 24px -18px rgba(14,27,34,0.3);
+}
+.deck-card legend {
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1.1rem;
+  padding: 0;
+  width: auto;
+  color: var(--ink);
+}
+.card-tag {
+  font-family: var(--font-label);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.68rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+.card-tag.small { font-size: 0.62rem; }
+
+.deck-label {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 0.35rem;
+  display: block;
+}
+.deck-hint-inline { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-soft); opacity: 0.8; }
+.deck-hint { font-family: var(--font-label); font-size: 0.68rem; color: var(--ink-soft); float: right; margin-top: 0.3rem; }
+
+.deck-input {
+  background: #fff;
+  border: 1.5px solid var(--card-border);
+  border-radius: 7px;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  padding: 0.6rem 0.8rem;
+  font-size: 0.92rem;
+}
+.deck-input:focus {
+  border-color: var(--pen);
+  box-shadow: 0 0 0 3px var(--pen-soft);
+}
+
+.deck-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; min-height: 1.6rem; }
+.deck-chip {
+  font-family: var(--font-label);
+  font-size: 0.76rem;
+  background: var(--pen-soft);
+  color: var(--pen);
+  border: 1px solid rgba(47,111,237,0.3);
+  padding: 0.3rem 0.6rem 0.3rem 0.75rem;
+  border-radius: 999px;
+  display: flex; align-items: center; gap: 0.45rem;
+}
+.deck-chip button {
+  background: none; border: none; color: inherit; line-height: 1;
+  cursor: pointer; opacity: 0.7; font-size: 0.85rem;
+}
+.deck-chip button:hover { opacity: 1; }
+
+/* Project rows */
+.project-row {
+  border: 1px dashed var(--card-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(14,27,34,0.015);
+}
+.project-row-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+.btn-remove-project {
+  background: none; border: none; color: var(--pin); font-size: 0.95rem; cursor: pointer;
+  width: 28px; height: 28px; border-radius: 6px; transition: background 0.2s ease;
+}
+.btn-remove-project:hover { background: rgba(224,85,43,0.12); }
+
+/* Swatches */
+.swatch-row { display: flex; gap: 0.6rem; }
+.swatch {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--sw);
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+.swatch:hover { transform: scale(1.1); }
+.swatch.active { border-color: var(--ink); box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink); }
+
+.mood-row { display: flex; gap: 0.6rem; }
+.mood-btn {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  background: #fff;
+  border: 1.5px solid var(--card-border);
+  border-radius: 7px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.mood-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ---------- RIGHT PREVIEW ---------- */
+.forge-preview-wrap {
+  background: repeating-linear-gradient(135deg, rgba(14,27,34,0.025) 0 2px, transparent 2px 14px), var(--paper);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.preview-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.preview-toolbar-label {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.preview-zoom-controls { display: flex; gap: 0.4rem; }
+.zoom-btn {
+  width: 34px; height: 34px; border-radius: 7px;
+  border: 1.5px solid var(--card-border);
+  background: #fff; color: var(--ink-soft);
+  cursor: pointer; transition: all 0.2s ease;
+}
+.zoom-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.preview-frame-outer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 30px 60px -30px rgba(14,27,34,0.35);
+  overflow: hidden;
+}
+#previewFrame {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+.preview-frame-outer.mobile-view #previewFrame {
+  width: 390px;
+  max-width: 100%;
+  border: 10px solid var(--ink);
+  border-radius: 28px;
+}
+
+@media (max-width: 991.98px) {
+  .forge-preview-wrap { min-height: 70vh; }
+}
+
+/* ---------- SCROLLBAR (drafting-deck) ---------- */
+.forge-deck::-webkit-scrollbar { width: 8px; }
+.forge-deck::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Forge — Build &amp; Export Your Portfolio</title>
+<meta name="description" content="Portfolio Forge: fill in a form and watch your personal portfolio site build itself live, then export it as a ready-to-host HTML file.">
+<meta name="theme-color" content="#0E1B22">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Top Bar ===== -->
+<header class="forge-topbar">
+  <div class="forge-brand">
+    <span class="forge-mark">PF</span>
+    <div>
+      <strong>Portfolio Forge</strong>
+      <span class="forge-tagline">draft &rarr; preview &rarr; export</span>
+    </div>
+  </div>
+  <div class="forge-actions">
+    <button class="btn btn-ghost-line" id="resetBtn" type="button"><i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-sm-inline">Reset</span></button>
+    <button class="btn btn-ghost-line" id="loadDemoBtn" type="button"><i class="bi bi-magic"></i> <span class="d-none d-sm-inline">Fill demo</span></button>
+    <button class="btn btn-forge-primary" id="downloadBtn" type="button"><i class="bi bi-download"></i> Export HTML</button>
+  </div>
+</header>
+
+<div class="forge-body">
+
+  <!-- ===== LEFT: CONTROL DECK (the form) ===== -->
+  <section class="forge-deck" aria-label="Portfolio details form">
+
+    <form id="forgeForm" novalidate>
+
+      <!-- Card 01 — Identity -->
+      <fieldset class="deck-card">
+        <legend><span class="card-tag">01</span> Identity</legend>
+
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="deck-label" for="fullName">Full name</label>
+            <input type="text" id="fullName" class="form-control deck-input" placeholder="e.g. Maya Iyer" required>
+          </div>
+          <div class="col-12">
+            <label class="deck-label" for="role">Role / title</label>
+            <input type="text" id="role" class="form-control deck-input" placeholder="e.g. Product Designer" required>
+          </div>
+          <div class="col-12">
+            <label class="deck-label" for="bio">Short bio</label>
+            <textarea id="bio" class="form-control deck-input" rows="3" maxlength="220" placeholder="One or two sentences about what you do and who you do it for."></textarea>
+            <span class="deck-hint"><span id="bioCount">0</span>/220</span>
+          </div>
+          <div class="col-12">
+            <label class="deck-label" for="photoUrl">Photo URL <span class="deck-hint-inline">(optional — initials used otherwise)</span></label>
+            <input type="url" id="photoUrl" class="form-control deck-input" placeholder="https://...">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Card 02 — Contact -->
+      <fieldset class="deck-card">
+        <legend><span class="card-tag">02</span> Contact</legend>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="deck-label" for="email">Email</label>
+            <input type="email" id="email" class="form-control deck-input" placeholder="you@email.com">
+          </div>
+          <div class="col-md-6">
+            <label class="deck-label" for="phone">Phone</label>
+            <input type="tel" id="phone" class="form-control deck-input" placeholder="+91 90000 00000">
+          </div>
+          <div class="col-md-6">
+            <label class="deck-label" for="location">Location</label>
+            <input type="text" id="location" class="form-control deck-input" placeholder="City, Country">
+          </div>
+          <div class="col-md-6">
+            <label class="deck-label" for="resumeUrl">Resume link <span class="deck-hint-inline">(optional)</span></label>
+            <input type="url" id="resumeUrl" class="form-control deck-input" placeholder="https://...">
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-6 col-md-3">
+            <label class="deck-label" for="linkGithub"><i class="bi bi-github"></i> GitHub</label>
+            <input type="url" id="linkGithub" class="form-control deck-input" placeholder="https://">
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="deck-label" for="linkLinkedin"><i class="bi bi-linkedin"></i> LinkedIn</label>
+            <input type="url" id="linkLinkedin" class="form-control deck-input" placeholder="https://">
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="deck-label" for="linkTwitter"><i class="bi bi-twitter-x"></i> Twitter</label>
+            <input type="url" id="linkTwitter" class="form-control deck-input" placeholder="https://">
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="deck-label" for="linkDribbble"><i class="bi bi-dribbble"></i> Dribbble</label>
+            <input type="url" id="linkDribbble" class="form-control deck-input" placeholder="https://">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Card 03 — Skills -->
+      <fieldset class="deck-card">
+        <legend><span class="card-tag">03</span> Skills</legend>
+        <label class="deck-label" for="skillInput">Type a skill and press Enter</label>
+        <input type="text" id="skillInput" class="form-control deck-input" placeholder="e.g. Figma, then Enter">
+        <div class="deck-chip-row" id="skillChips" aria-live="polite"></div>
+      </fieldset>
+
+      <!-- Card 04 — Projects (repeatable) -->
+      <fieldset class="deck-card">
+        <legend><span class="card-tag">04</span> Projects</legend>
+        <div id="projectsList"></div>
+        <button type="button" class="btn btn-ghost-line w-100 mt-2" id="addProjectBtn">
+          <i class="bi bi-plus-lg"></i> Add project
+        </button>
+      </fieldset>
+
+      <!-- Card 05 — Look -->
+      <fieldset class="deck-card">
+        <legend><span class="card-tag">05</span> Look</legend>
+        <label class="deck-label d-block mb-2">Accent color</label>
+        <div class="swatch-row" id="swatchRow">
+          <button type="button" class="swatch active" data-color="#2F6FED" data-text="#0E1B22" style="--sw:#2F6FED" aria-label="Blue accent"></button>
+          <button type="button" class="swatch" data-color="#E0552B" data-text="#0E1B22" style="--sw:#E0552B" aria-label="Terracotta accent"></button>
+          <button type="button" class="swatch" data-color="#1E9E6B" data-text="#0E1B22" style="--sw:#1E9E6B" aria-label="Green accent"></button>
+          <button type="button" class="swatch" data-color="#9B5DE5" data-text="#0E1B22" style="--sw:#9B5DE5" aria-label="Violet accent"></button>
+          <button type="button" class="swatch" data-color="#D6A328" data-text="#0E1B22" style="--sw:#D6A328" aria-label="Gold accent"></button>
+        </div>
+        <label class="deck-label d-block mt-3 mb-2">Layout mood</label>
+        <div class="mood-row" id="moodRow">
+          <button type="button" class="mood-btn active" data-mood="dark">Dark</button>
+          <button type="button" class="mood-btn" data-mood="light">Light</button>
+        </div>
+      </fieldset>
+
+    </form>
+  </section>
+
+  <!-- ===== RIGHT: LIVE PREVIEW SHEET ===== -->
+  <section class="forge-preview-wrap" aria-label="Live portfolio preview">
+    <div class="preview-toolbar">
+      <span class="preview-toolbar-label"><i class="bi bi-eye"></i> Live preview</span>
+      <div class="preview-zoom-controls">
+        <button type="button" class="zoom-btn active" data-view="desktop" aria-label="Desktop preview"><i class="bi bi-display"></i></button>
+        <button type="button" class="zoom-btn" data-view="mobile" aria-label="Mobile preview"><i class="bi bi-phone"></i></button>
+      </div>
+    </div>
+    <div class="preview-frame-outer" id="previewFrameOuter">
+      <iframe id="previewFrame" title="Portfolio live preview"></iframe>
+    </div>
+  </section>
+
+</div>
+
+<!-- Project card template (cloned by JS) -->
+<template id="projectTemplate">
+  <div class="project-row" data-project-row>
+    <div class="project-row-head">
+      <span class="card-tag small project-index"></span>
+      <button type="button" class="btn-remove-project" aria-label="Remove project"><i class="bi bi-trash3"></i></button>
+    </div>
+    <div class="row g-2">
+      <div class="col-12">
+        <input type="text" class="form-control deck-input proj-title" placeholder="Project title">
+      </div>
+      <div class="col-12">
+        <textarea class="form-control deck-input proj-desc" rows="2" placeholder="What it does, your role, the result."></textarea>
+      </div>
+      <div class="col-12">
+        <input type="text" class="form-control deck-input proj-tech" placeholder="Tech used, comma separated (React, Node.js)">
+      </div>
+      <div class="col-6">
+        <input type="url" class="form-control deck-input proj-link" placeholder="Live link (optional)">
+      </div>
+      <div class="col-6">
+        <input type="url" class="form-control deck-input proj-repo" placeholder="Code link (optional)">
+      </div>
+    </div>
+  </div>
+</template>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
