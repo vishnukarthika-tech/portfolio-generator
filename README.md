@@ -1,0 +1,7 @@
+Build a modern, responsive, and visually stunning personal portfolio website that showcases professional skills, projects, experience, and achievements. The website should create a strong first impression with a clean user interface, smooth animations, and an engaging user experience. Design the portfolio to reflect professionalism, creativity, and technical expertise while maintaining fast performance and accessibility.
+
+The website should include a compelling hero section, detailed about section, technical skills visualization, project showcase with live demos, professional experience timeline, services offered, client testimonials, and a contact form. Use modern design principles such as glassmorphism, subtle gradients, interactive hover effects, smooth scrolling, and responsive layouts.
+
+Implement the website using HTML5, CSS3, JavaScript, and Bootstrap 5. Ensure the design is fully responsive across desktop, tablet, and mobile devices. Include dark/light mode functionality, animated counters, project filtering, form validation, and SEO-friendly structure. The overall aesthetic should be sleek, contemporary, and suitable for a software developer, web developer, full-stack engineer, UI/UX designer, freelancer, or technology professional seeking to establish a strong online presence.
+
+The final website should feel premium, professional, interactive, and production-ready, with clean code organization and adherence to modern web development best practices.
